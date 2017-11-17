@@ -1,0 +1,34 @@
+// ==UserScript==
+// @name         Ucoin Cash Automation Tool
+// @namespace    http://tampermonkey.net/
+// @version      3.0
+// @description  try to take over the world!
+// @author       Hieu Nguyen
+// @match        https://ucoincash.co/*
+
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+	// $.getScript('https://rawgit.com/peter-nguyen88/js-hosting/master/ucoin-captcha-reload.js');
+
+    var USERNAME = 'XXXX';
+    var PASSWORD = 'XXXX';
+
+    if(document.body.textContent === 'The service is unavailable.') window.location.reload();
+    if(!window.dataLayer && (!document.getElementById('cf-content') && !document.getElementById('cf-wrapper')) && !window.location.href.indexOf('.js')) window.location.reload();
+
+    if(window.location.href === 'https://ucoincash.co/Account/Signin' && !$('#cf-wrapper').length){
+       $('#input-sign-username').val(USERNAME);
+       if(PASSWORD){
+           $('#input-sign-password').val(PASSWORD);
+           $('#btn-signin').click();
+       }
+    }
+
+    // Redirect to Buy ICO to Save Time
+    if(window.location.href === 'https://ucoincash.co/Home/Dashboard') window.location.href = 'https://ucoincash.co/ICO/Buy';
+    if(window.location.href === 'https://ucoincash.co/' || window.location.href === 'https://ucoincash.co/Home') window.location.href = 'https://ucoincash.co/Account/Signin';
+})();
