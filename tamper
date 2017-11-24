@@ -1,0 +1,46 @@
+// ==UserScript==
+// @name         Ucoin Cash Automation Tool
+// @namespace    http://tampermonkey.net/
+// @version      3.0
+// @description  try to take over the world!
+// @author       Hieu Nguyen
+// @match        https://ucoincash.co/*
+
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+	// $.getScript('https://rawgit.com/peter-nguyen88/js-hosting/master/ucoin-captcha-reload.js');
+
+    var USERNAME = 'nthieubk';
+
+    if(document.title.toLowerCase().indexOf('service unavailable') !== -1 || document.body.textContent === 'The service is unavailable.' || document.title ==='Service Unavailable' || document.getElementById('cf_alert_div')) window.location.reload();
+    if(!window.dataLayer && !document.getElementById('cf-content') && !document.getElementById('cf-wrapper') && !window.location.href.indexOf('.js')) window.location.reload();
+
+    if(window.location.href === 'https://ucoincash.co/Account/Signin' && !document.getElementById('cf-wrapper')){
+       $('#input-sign-username').val(USERNAME);
+       if(PASSWORD){
+           $('#input-sign-password').val(PASSWORD);
+           $('#btn-signin').click();
+       }
+    }
+
+    // Redirect to Buy ICO to Save Time
+    if(window.location.href === 'https://ucoincash.co/Home/Dashboard') window.location.href = 'https://ucoincash.co/ICO/Buy';
+    if(window.location.href === 'https://ucoincash.co/' || window.location.href === 'https://ucoincash.co/Home') window.location.href = 'https://ucoincash.co/Account/Signin';
+
+    if(window.location.href.indexOf('https://ucoincash.co/?ReturnUrl') !== -1)  window.location.href = 'https://ucoincash.co/Account/Signin';
+
+    if(typeof window.EXPOSED_LIMIT !== 'undefined'){
+        console.log('LIMIT: '+window.EXPOSED_LIMIT);
+        if(!window.EXPOSED_LIMIT) window.location.reload();
+    }
+    // ------------- Buy Button -------------
+    if(typeof $ !== 'undefined'){
+        if(!$('#buy--ico--now').length) $('div.div-user-coin').after($('<button class="btn btn-warning enabled" id="buy--ico--now" style="margin: 0 auto;">BUY UCH</button>'));
+        if(!$('#open--ico--now').length) $('#buy--ico--now').after($('<button class="btn btn-danger enabled" id="open--ico--now" style="margin: 0 auto; border-radius: 20px;">REOPEN UCH</button>'));
+        $('#open--ico--now').click(function(){$('#div-buy-uch').modal('show');});
+    }
+})();
